@@ -47,7 +47,7 @@ app.post('/gemini', async (req, res) => {
 
     } catch (error) {
         console.error(error)
-        res.status(500).send(`An error has occurred ${error}`)
+        res.status(500).send(`An error has occurred ${error.message}`)
     }
 })
 
