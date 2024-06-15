@@ -17,10 +17,6 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'dist')))
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
-})
-
 app.post('/gemini', async (req, res) => {
     const model = genAI.getGenerativeModel({
         // model: 'gemini-pro',
@@ -33,12 +29,31 @@ app.post('/gemini', async (req, res) => {
     })
     const msg = req.body.message
 
-    const result = await chat.sendMessageStream(msg, {
-        userInstruction: "Do not provide code. Offer conceptual guidance and tips instead."
-    })
-    const response = await result.response
-    const text = response.text()
-    res.send(text)
+    try {
+        const result = await chat.sendMessageStream(msg, {
+            userInstruction: "Do not provide code. Offer conceptual guidance and tips instead."
+        })
+
+        res.setHeader('Content-Type', 'text/plain')
+        res.setHeader('Transfer-Encoding', 'chunked')
+
+        let text = ''
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text()
+            text += chunkText
+            res.write(chunkText)
+        }
+        res.send(text)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(`An error has occurred ${error}`)
+    }
+})
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
 app.listen(PORT, () => console.log(`All systems go captain at port ${PORT}`))
