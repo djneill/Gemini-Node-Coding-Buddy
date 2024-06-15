@@ -36,7 +36,7 @@ export default function App() {
           'Content-Type': 'application/json'
         }
       }
-      const response = await fetch('http://localhost:3000/gemini', options)
+      const response = await fetch('https://gemini-coding-buddy.onrender.com/gemini', options)
       const data = await response.text()
 
       setChatHistory((oldChatHistory) => [...oldChatHistory, {
