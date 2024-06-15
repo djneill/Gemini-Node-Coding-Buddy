@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import './index.css'
-import { Button } from '../components/ui/button.tsx'
+import { Button } from './components/ui/button.tsx'
 
 export default function App() {
   const [value, setValue] = useState<string>('')
