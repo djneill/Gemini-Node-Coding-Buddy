@@ -30,7 +30,7 @@ app.post('/gemini', async (req, res) => {
     const msg = req.body.message
 
     const result = await chat.sendMessage(msg, {
-        userInstruction: "Do not provide code. Offer conceptual guidance and tips instead."
+        userInstruction: "Do not provide code or code structure. Offer conceptual guidance and tips instead."
     })
     const response = await result.response
     const text = response.text()
