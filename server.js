@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'dist')))
 
 app.post('/gemini', async (req, res) => {
-    const model = genAI.getGenerativeModel({
+    const model = await genAI.getGenerativeModel({
         // model: 'gemini-pro',
         model: 'gemini-1.5-flash',
         systemInstruction: "You are a senior software engineer helping develop junior and mid-level software engineers.Your goal is to encourage them to find solutions through their own research and problem-solving.Only provide hints, tips, and methods that can be used for further development related to the query. Do not provide any code solutions, code snippets, or specific coding instructions. Focus on conceptual explanations, guiding questions, and high-level approaches. If asked for code, remind them to try implementing it themselves based on the provided concepts and methods."
@@ -41,13 +41,13 @@ app.post('/gemini', async (req, res) => {
         for await (const chunk of result.stream) {
             const chunkText = chunk.text()
             text += chunkText
-            res.write(chunkText)
+            res.write(text)
         }
-        res.send(text)
+        res.end()
 
     } catch (error) {
         console.error(error)
-        res.status(500).send(`An error has occurred ${error}`)
+        res.status(500).send(`An error has occurred ${error.message}`)
     }
 })
 
