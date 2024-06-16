@@ -80,6 +80,13 @@ export default function App() {
           <div className='flex flex-col overflow-y-scroll my-4 mx-auto w-[80vw] h-full md:h-[90vh] bg-indigo-950 rounded-md border-solid border-cyan-300 border-2 p-2'>
             {chatHistory.map((chatItem, _index) => (
               <div key={_index} className={`flex ${chatItem.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
+                {chatItem.role !== 'user' && (
+                  <img
+                    src='/cortana2.jpeg'
+                    alt='model avatar'
+                    className='w-10 h-10 rounded-full mr-2'
+                  />
+                )}
                 <p className={`max-w-sx p-3 rounded-lg ${chatItem.role === 'user' ? 'bg-blue-900 text-right shadow-md shadow-cyan-500 w-10/12' : 'bg-green-900 text-left shadow-md shadow-green-400 whitespace-pre-wrap w-10/12'}`}>
                   <ReactMarkdown remarkPlugins={[remarkGfm]} className='prose prose-invert'>
                     {chatItem.parts[0].text}
