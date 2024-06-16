@@ -64,7 +64,7 @@ export default function App() {
 
   return (
     <div id='app' className='flex flex-col w-[100vw] h-[100vh] bg-slate-900'>
-      <div className='flex flex-col mx-auto w-[80vw] h-[75vh] md:h-[85vh] my-2'>
+      <div className='flex flex-col mx-auto w-[80vw] h-[70vh] md:h-[85vh] my-2'>
         <div className='flex flex-col md:flex-row md:justify-evenly'>
           <p className='flex justify-center align-middle text-center items-center py-2 font-light mx-auto'>Welcome to your coding assistant. What would you like to know?
           </p>
