@@ -82,7 +82,7 @@ export default function App() {
               <div key={_index} className={`flex ${chatItem.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
                 {chatItem.role !== 'user' && (
                   <img
-                    src='/cortana2.jpeg'
+                    src='/logo-color.svg'
                     alt='model avatar'
                     className='w-10 h-10 rounded-full mr-2'
                   />
