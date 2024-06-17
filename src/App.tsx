@@ -68,7 +68,7 @@ export default function App() {
         <div className='flex flex-col md:flex-row md:justify-evenly'>
           <p className='flex justify-center align-middle text-center items-center py-2 font-light mx-auto'>Welcome to your coding assistant. What would you like to know?
           </p>
-          <Button className='mx-auto justify-center hover:bg-indigo-800 hover:text-white'
+          <Button className='mx-auto justify-center hover:bg-indigo-800 hover:text-white hover:shadow-md hover:shadow-cyan-500'
             onClick={random}
             disabled={!chatHistory}
           >
@@ -107,8 +107,8 @@ export default function App() {
           className='w-[80%] h-12 rounded-sm font-light pl-4 text-black'
           rows={3}
         />
-        {!error && <Button className=' h-12 ml-4 hover:bg-indigo-800 hover:text-white' onClick={getResponse}>Send</Button>}
-        {error && <Button onClick={clear}>Clear</Button>}
+        {!error && <Button className=' h-12 ml-4 hover:bg-indigo-800 hover:text-white hover:shadow-md hover:shadow-cyan-500' onClick={getResponse}>Send</Button>}
+        {error && <Button className=' h-12 ml-4 hover:bg-indigo-800 hover:text-white hover:shadow-md hover:shadow-cyan-500' onClick={clear}>Clear</Button>}
       </div>
       {error && <p>{error}</p>}
     </div>
