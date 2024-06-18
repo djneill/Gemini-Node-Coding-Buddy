@@ -87,8 +87,8 @@ export default function App() {
                     className='w-10 h-10 rounded-full mr-2'
                   />
                 )}
-                <p className={`max-w-sx p-3 rounded-lg ${chatItem.role === 'user' ? 'bg-blue-900 text-right shadow-md shadow-cyan-500 w-10/12' : 'bg-green-900 text-left shadow-md shadow-green-400 whitespace-pre-wrap w-10/12'}`}>
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} className='prose prose-invert'>
+                <p className={`max-w-sx p-3 rounded-lg ${chatItem.role === 'user' ? ' text-right bg-blue-900 shadow-md shadow-cyan-500 w-10/12' : 'bg-green-900 text-left shadow-md shadow-green-400 whitespace-pre-wrap w-10/12'}`}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} className={`${chatItem.role === 'user' ? 'text-right' : 'text-left prose prose-invert'}`}>
                     {chatItem.parts[0].text}
                   </ReactMarkdown>
                 </p>
