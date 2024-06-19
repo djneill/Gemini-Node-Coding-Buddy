@@ -3,10 +3,12 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import './index.css'
 import { Button } from './components/ui/button.tsx'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function App() {
   const [value, setValue] = useState<string>('')
-  const [error, setError] = useState<string>('')
+  // const [error, setError] = useState<string>('')
   const [chatHistory, setChatHistory] = useState<{ role: string; parts: { text: string }[] }[]>([])
 
   const randomQuestion: string[] = [
@@ -22,7 +24,7 @@ export default function App() {
 
   const getResponse = async () => {
     if (!value) {
-      setError('Error! Please ask a question.')
+      toast.error('Error! Please ask a question.')
       return
     }
     try {
@@ -37,6 +39,10 @@ export default function App() {
         }
       }
       const response = await fetch('https://gemini-coding-buddy.onrender.com/gemini', options)
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error)
+      }
       const data = await response.text()
 
       setChatHistory((oldChatHistory) => [...oldChatHistory, {
@@ -52,15 +58,19 @@ export default function App() {
 
     } catch (error) {
       console.error(error)
-      setError('Something went wrong' + error)
+      if (error instanceof Error) {
+        toast.error(`An error has occurred: ${error.message}`)
+      } else {
+        toast.error('An unknown error has occurred.')
+      }
     }
   }
 
-  const clear = () => {
-    setValue('')
-    setError('')
-    setChatHistory([])
-  }
+  // const clear = () => {
+  //   setValue('')
+  //   setError('')
+  //   setChatHistory([])
+  // }
 
   return (
     <div id='app' className='flex flex-col w-[100vw] h-[100vh] bg-slate-900'>
@@ -107,10 +117,9 @@ export default function App() {
           className='w-[80%] h-12 rounded-sm font-light pl-4 text-black'
           rows={3}
         />
-        {!error && <Button className=' h-12 ml-4 hover:bg-indigo-800 hover:text-white hover:shadow-md hover:shadow-cyan-500' onClick={getResponse}>Send</Button>}
-        {error && <Button className=' h-12 ml-4 hover:bg-indigo-800 hover:text-white hover:shadow-md hover:shadow-cyan-500' onClick={clear}>Clear</Button>}
+        <Button className=' h-12 ml-4 hover:bg-indigo-800 hover:text-white hover:shadow-md hover:shadow-cyan-500' onClick={getResponse}>Send</Button>
       </div>
-      {error && <p>{error}</p>}
+      <ToastContainer />
     </div>
   )
 }
