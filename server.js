@@ -29,12 +29,17 @@ app.post('/gemini', async (req, res) => {
     })
     const msg = req.body.message
 
-    const result = await chat.sendMessage(msg, {
-        userInstruction: "Do not provide code or code structure. Offer conceptual guidance and tips instead."
-    })
-    const response = await result.response
-    const text = response.text()
-    res.send(text)
+    try {
+        const result = await chat.sendMessage(msg, {
+            userInstruction: "Do not provide code or code structure. Offer conceptual guidance and tips instead."
+        })
+        const response = await result.response
+        const text = response.text()
+        res.send(text)
+    } catch (error) {
+        console.error('Error:', error)
+        res.status(500).send({ error: `An error has occurred: ${error.message}` })
+    }
 })
 
 app.get('*', (req, res) => {
